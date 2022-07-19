@@ -13,11 +13,12 @@ app.use(express.json());
 //frontend route - ./src/Pages/Reload.js
 app.get("/api/v1/getBeers", async (req, res) => {
     const results = await db.query("SELECT * FROM beers")
-    console.log(results)
+    console.log(results.rows)
 });
 //no route yet
-app.get("/api/v1/getBeers/:id", (req, res) => {
-    console.log(req.params);
+app.get("/api/v1/getBeers/:id", async (req, res) => {
+    const results = await db.query('SELECT * FROM beers WHERE id = $1', [req.params.id])
+    console.log(results.rows[0])
 });
 
 //EVENTS LIST
@@ -26,8 +27,9 @@ app.get("/api/v1/getEvents", async (req, res) => {
     const results = await db.query("SELECT * FROM events")
     console,log(results)
 });
-app.get("/api/v1/getEvents/:id", (req, res) => {
-    console.log(req);
+app.get("/api/v1/getEvents/:id", async (req, res) => {
+    const results = await db.query('SELECT * FROM events WHERE id = $1', [req.params.id])
+    console.log(results.rows[0])
 });
 
 //ARCADE LIST
@@ -35,8 +37,9 @@ app.get("/api/v1/getEvents/:id", (req, res) => {
 app.get("/api/v1/getGames", async (req, res) => {
     const results = await db.query("SELECT * FROM games")
 });
-app.get("/api/v1/getGames/:id", (req, res) => {
-    console.log(req);
+app.get("/api/v1/getGames/:id",async (req, res) => {
+    const results = await db.query('SELECT * FROM games WHERE id = $1', [req.params.id])
+    console.log(results.rows[0])
 });
 
 //LISTENER
