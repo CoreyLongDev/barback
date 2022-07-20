@@ -1,4 +1,5 @@
 require("dotenv").config();
+const cors = require('cors')
 const express = require("express");
 const db = require("./db");
 const morgan = require("morgan");
@@ -6,6 +7,7 @@ const app = express();
 
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(cors())
 
 
 
@@ -14,6 +16,7 @@ app.use(express.json());
 app.get("/api/v1/getBeers", async (req, res) => {
     const results = await db.query("SELECT * FROM beers")
     console.log(results.rows)
+    res.json(results.rows)
 });
 //no route yet
 app.get("/api/v1/getBeers/:id", async (req, res) => {
